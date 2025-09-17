@@ -1,0 +1,33 @@
+# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_baked_whole.yml & food_baked_single.yml
+# Base
+
+- type: entity
+  name: big cake
+  parent: FoodCakeBase
+  id: FoodCakePlainBig
+  description: A monsterous creation of baking.
+  components:
+  - type: Sprite
+    state: plain
+  - type: SliceableFood
+    slice: FoodCakePlainSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 220
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 120
+        - ReagentId: Vitamin
+          Quantity: 30
+  - type: Item
+    heldPrefix: plain
+    
+    
+#BASE CAKE VALUES
+#maxVol: 55
+#        reagents:
+#        - ReagentId: Nutriment
+#          Quantity: 20
+#        - ReagentId: Vitamin
+#          Quantity: 5

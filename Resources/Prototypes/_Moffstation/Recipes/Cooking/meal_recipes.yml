@@ -39,3 +39,18 @@
   solids:
     FoodBreadBun: 1
     MobMothroachRosy: 1
+
+#THE EGG ZONE
+- type: microwaveMealRecipe
+  id: RecipeBigCake
+  name: big cake recipe
+  result: FoodBigCake
+  time: 30
+  group: 
+  reagants:
+    Flour:
+    Milk:
+    Sugar:
+  solids:
+    FoodBigEgg: 1
+    

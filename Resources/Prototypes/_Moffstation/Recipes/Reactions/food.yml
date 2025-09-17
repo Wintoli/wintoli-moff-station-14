@@ -1,0 +1,28 @@
+- type: reaction
+  id: CreateBigEgg
+  impact: Low
+  quantized: true
+  conserveEnergy: false
+  reactants:
+    Egg:
+      amount: 72
+    Enzyme:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodBigEgg
+
+#EXAMPLE WHILE I FIGURE THIS SHIT OUT
+#- type: reaction
+#  id: CreateDough
+#  impact: Low
+#  quantized: true
+#  conserveEnergy: false
+#  reactants:
+#    Flour:
+#      amount: 15
+#    Water:
+#      amount: 10
+#  effects:
+#    - !type:CreateEntityReactionEffect
+#      entity: FoodDough

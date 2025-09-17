@@ -1,0 +1,29 @@
+- type: entity
+  parent: FoodEgg
+  id: FoodBigEgg
+  name: big egg
+  description: This egg is...quite large.
+  components:
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 0.1
+    damage:
+      types:
+        Blunt: 40 #Too much power? Maybe. But funny.
+  - type: Sprite
+    sprite: _Moffstation/
+  - type: Item
+    size: Ginormous
+    sprite: _Moffstation/
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 72 # Bigger egg = more egg volume
+        reagents:
+        - ReagentId: Egg
+          Quantity: 72 # Bigger egg = more egg
+  - type: RandomSprite #Dude im not making 2 egg sprites you get 1 sprite ok
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        icon: ""
+  - type: DetailExaminable
+    content: This egg scares me. Has science gone too far?
