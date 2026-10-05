@@ -8,5 +8,7 @@ namespace Content.Shared._Moffstation.JestographicSequencer;
 public sealed partial class JestographicSequencerComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public SoundSpecifier ReverseSound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
+    public SoundSpecifier ReverseSound = new SoundPathSpecifier(
+        "/Audio/Items/bikehorn.ogg",
+        AudioParams.Default.AddVolume(-6f));
 }

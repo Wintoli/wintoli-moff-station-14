@@ -6,6 +6,8 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Database;
+using Content.Shared.Doors.Components;
+using Content.Shared.Doors.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -25,6 +27,7 @@ public sealed class JestographicSequencerSystem : EntitySystem
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedChargesSystem _charges = default!;
+    [Dependency] private readonly SharedDoorSystem _door = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
@@ -44,19 +47,38 @@ public sealed class JestographicSequencerSystem : EntitySystem
 
         var reader = readerEnt.Value.Comp;
 
-        //Cant revert access if door allows everyone already (no accesses). For now just says nah cant do it. TODO: figure out how to make a door have no access at all or make it bolt the door instead perhaps? Thinking on it.
-        if (reader.AccessLists.Count == 0 && reader.DenyTags.Count == 0)
-        {
-            _popup.PopupEntity(
-                Loc.GetString("jestographic-sequencer-no-access", ("target", Identity.Entity(target, EntityManager))),
-                args.User,
-                args.User);
-            return;
-        }
-
         if (_charges.IsEmpty(ent.Owner))
         {
             _popup.PopupEntity(Loc.GetString("jestographic-sequencer-no-charges"), args.User, args.User);
+            return;
+        }
+
+        //Empty access lists allow everyone, so can't be reversed. Door is bolted instead.
+        if (reader.AccessLists.Count == 0 && reader.DenyTags.Count == 0)
+        {
+            if (!TryComp<DoorBoltComponent>(target, out var bolt)
+                || !_door.TrySetBoltDown((target, bolt), true, args.User, true))
+            {
+                _popup.PopupEntity(
+                    Loc.GetString("jestographic-sequencer-no-access", ("target", Identity.Entity(target, EntityManager))),
+                    args.User,
+                    args.User);
+                return;
+            }
+
+            _charges.TryUseCharge(ent.Owner);
+            _audio.PlayPredicted(ent.Comp.ReverseSound, target, args.User);
+            _popup.PopupEntity(
+                Loc.GetString("jestographic-sequencer-bolted", ("target", Identity.Entity(target, EntityManager))),
+                args.User,
+                args.User,
+                PopupType.Medium);
+
+            _adminLogger.Add(LogType.Emag,
+                LogImpact.High,
+                $"{ToPrettyString(args.User):player} bolted {ToPrettyString(target):target} shut using {ToPrettyString(ent):used}");
+
+            args.Handled = true;
             return;
         }
 
