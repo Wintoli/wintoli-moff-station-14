@@ -11,6 +11,8 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Wires;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 
@@ -19,6 +21,7 @@ namespace Content.Shared._Moffstation.JestographicSequencer;
 ///<summary>
 ///Handles using the jestographic sequencer on things with an "AccessReaderComponent",
 ///swapping their granted accesses for denied ones and vice versa.
+///It can also be used on cyborgs, replacing their laws with the sequencer's lawset (see SharedSiliconLawSystem.Jestographic).
 ///</summary>
 public sealed class JestographicSequencerSystem : EntitySystem
 {
@@ -42,16 +45,47 @@ public sealed class JestographicSequencerSystem : EntitySystem
         if (args.Handled || !args.CanReach || args.Target is not { } target)
             return;
 
-        if (!_accessReader.GetMainAccessReader(target, out var readerEnt))
-            return;
+        //Borgs get their laws swapped, but a closed panel gets its access swapped.
+        var isBorg = HasComp<BorgBrainComponent>(target)
+                     || HasComp<BorgChassisComponent>(target)
+                     && TryComp<WiresPanelComponent>(target, out var panel)
+                     && panel.Open;
+        AccessReaderComponent? reader = null;
+        Entity<AccessReaderComponent>? readerEnt = null;
+        if (!isBorg)
+        {
+            if (!_accessReader.GetMainAccessReader(target, out readerEnt))
+                return;
 
-        var reader = readerEnt.Value.Comp;
+            reader = readerEnt.Value.Comp;
+        }
 
         if (_charges.IsEmpty(ent.Owner))
         {
             _popup.PopupEntity(Loc.GetString("jestographic-sequencer-no-charges"), args.User, args.User);
             return;
         }
+
+        if (isBorg)
+        {
+            //You've just been jested. A charge is only spent if it succeeds.
+            var jested = new GotJestedEvent(args.User, ent.Comp.Lawset);
+            RaiseLocalEvent(target, ref jested);
+            if (!jested.Handled)
+                return;
+
+            _charges.TryUseCharge(ent.Owner);
+            _audio.PlayPredicted(ent.Comp.ReverseSound, target, args.User);
+            _adminLogger.Add(LogType.Emag,
+                LogImpact.High,
+                $"{ToPrettyString(args.User):player} jested {ToPrettyString(target):target} using {ToPrettyString(ent):used}");
+
+            args.Handled = true;
+            return;
+        }
+
+        if (reader == null || readerEnt == null)
+            return;
 
         //Empty access lists allow everyone, so can't be reversed. Door is bolted instead.
         if (reader.AccessLists.Count == 0 && reader.DenyTags.Count == 0)
