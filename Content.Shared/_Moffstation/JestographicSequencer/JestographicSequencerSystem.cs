@@ -32,6 +32,7 @@ public sealed class JestographicSequencerSystem : EntitySystem
     [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly SharedDoorSystem _door = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     public override void Initialize()
     {
@@ -124,6 +125,18 @@ public sealed class JestographicSequencerSystem : EntitySystem
         foreach (var denyTag in reader.DenyTags)
         {
             newAccessLists.Add([denyTag]);
+        }
+
+        //Cause this was a pain to figure out, when swapping, the access list becoming empty and the deny list filling would let people in with no or blank IDs, defeating the purpose of the item 
+        //since people could just take off their ID to get into places. While techincally not 100% swapping all access, this makes sure that any door it is used on still requires an ID to use. 
+        //However if the door had no accesses before, it will still default to bolting w/ no change at all.
+        //This introduces a rare scenario where someone with an entirely blank ID could somehow not gain access to a room/item, but I think it is worth it.  
+        if (newAccessLists.Count == 0)
+        {
+            foreach (var level in _prototype.EnumeratePrototypes<AccessLevelPrototype>())
+            {
+                newAccessLists.Add([level.ID]);
+            }
         }
 
         _accessReader.SetDenyTags(readerEnt.Value, newDenyTags);
