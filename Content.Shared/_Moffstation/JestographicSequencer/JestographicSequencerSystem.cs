@@ -12,6 +12,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Silicons.StationAi;
 using Content.Shared.Wires;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
@@ -33,6 +34,7 @@ public sealed class JestographicSequencerSystem : EntitySystem
     [Dependency] private readonly SharedDoorSystem _door = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly SharedStationAiSystem _stationAi = default!;
 
     public override void Initialize()
     {
@@ -102,6 +104,11 @@ public sealed class JestographicSequencerSystem : EntitySystem
             }
 
             _charges.TryUseCharge(ent.Owner);
+
+            //Bolting also cuts the AI off from the door, the same as cutting the AI wire.
+            if (TryComp<StationAiWhitelistComponent>(target, out var aiWhitelist))
+                _stationAi.SetWhitelistEnabled((target, aiWhitelist), false, announce: true);
+
             _audio.PlayPredicted(ent.Comp.ReverseSound, target, args.User);
             _popup.PopupEntity(
                 Loc.GetString("jestographic-sequencer-bolted", ("target", Identity.Entity(target, EntityManager))),
