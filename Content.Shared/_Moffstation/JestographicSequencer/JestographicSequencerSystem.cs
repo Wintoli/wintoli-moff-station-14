@@ -10,9 +10,14 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Silicons.StationAi;
+using Content.Shared.Sound.Components;
+using Content.Shared.Timing;
+using Content.Shared.Whitelist;
 using Content.Shared.Wires;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
@@ -35,12 +40,26 @@ public sealed class JestographicSequencerSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedStationAiSystem _stationAi = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _speed = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<JestographicSequencerComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<JestographicSequencerComponent, BeforeRangedInteractEvent>(OnBeforeRangedInteract);
+    }
+
+    //Runs before the target's own InteractUsing, so storage items (e.g. the pie cannon) don't not allow it to be used.
+    private void OnBeforeRangedInteract(Entity<JestographicSequencerComponent> ent, ref BeforeRangedInteractEvent args)
+    {
+        if (args.Handled || !args.CanReach || args.Target is not { } target)
+            return;
+
+        if (TryApplySpecialInteraction(ent, target, args.User))
+            args.Handled = true;
     }
 
     private void OnAfterInteract(Entity<JestographicSequencerComponent> ent, ref AfterInteractEvent args)
@@ -48,7 +67,7 @@ public sealed class JestographicSequencerSystem : EntitySystem
         if (args.Handled || !args.CanReach || args.Target is not { } target)
             return;
 
-        //Borgs get their laws swapped, but a closed panel gets its access swapped.
+        //Borgs get their laws swapped with panel open, but a closed one gets its access swapped.
         var isBorg = HasComp<BorgBrainComponent>(target)
                      || HasComp<BorgChassisComponent>(target)
                      && TryComp<WiresPanelComponent>(target, out var panel)
@@ -105,7 +124,7 @@ public sealed class JestographicSequencerSystem : EntitySystem
 
             _charges.TryUseCharge(ent.Owner);
 
-            //Bolting also cuts the AI off from the door, the same as cutting the AI wire.
+            //Bolting also cuts the AI off from the door.
             if (TryComp<StationAiWhitelistComponent>(target, out var aiWhitelist))
                 _stationAi.SetWhitelistEnabled((target, aiWhitelist), false, announce: true);
 
@@ -137,7 +156,7 @@ public sealed class JestographicSequencerSystem : EntitySystem
         //Cause this was a pain to figure out, when swapping, the access list becoming empty and the deny list filling would let people in with no or blank IDs, defeating the purpose of the item 
         //since people could just take off their ID to get into places. While techincally not 100% swapping all access, this makes sure that any door it is used on still requires an ID to use. 
         //However if the door had no accesses before, it will still default to bolting w/ no change at all.
-        //This introduces a rare scenario where someone with an entirely blank ID could somehow not gain access to a room/item, but I think it is worth it.  
+        //This introduces a rare scenario where someone with an entirely blank ID could somehow not gain access to a room/item they didnt have prior, but I think it is worth it.  
         if (newAccessLists.Count == 0)
         {
             foreach (var level in _prototype.EnumeratePrototypes<AccessLevelPrototype>())
@@ -163,5 +182,90 @@ public sealed class JestographicSequencerSystem : EntitySystem
             $"{ToPrettyString(args.User):player} reversed the accesses on {ToPrettyString(target):target} using {ToPrettyString(ent):used}");
 
         args.Handled = true;
+    }
+
+    /// <summary>
+    ///If there is a special interaction, apply the matching modification.
+    ///Thought this would be cleaner than how the emag does it, and so im not editing a ton of upstream files, however I get it is basically an ugly series of if else checks every time it is used.
+    /// </summary>
+    private bool TryApplySpecialInteraction(Entity<JestographicSequencerComponent> ent, EntityUid target, EntityUid user)
+    {
+        var targetProto = Prototype(target)?.ID;
+
+        foreach (var interaction in _prototype.EnumeratePrototypes<JestographicInteractionPrototype>())
+        {
+            var matches = targetProto != null && interaction.Prototypes.Contains(targetProto)
+                          || _whitelist.IsWhitelistPass(interaction.Whitelist, target);
+            if (!matches)
+                continue;
+
+            if (_charges.IsEmpty(ent.Owner))
+            {
+                _popup.PopupEntity(Loc.GetString("jestographic-sequencer-no-charges"), user, user);
+                return true;
+            }
+
+            //Modules inside a chassis can't be swapped.
+            var refuse = interaction.ReplaceWith is { } replacement
+                ? targetProto == replacement.Id || TryComp<BorgModuleComponent>(target, out var module) && module.Installed
+                : HasComp<JestographicInteractedComponent>(target);
+            if (refuse)
+            {
+                _popup.PopupEntity(
+                    Loc.GetString("jestographic-sequencer-already-jested", ("target", Identity.Entity(target, EntityManager))),
+                    user,
+                    user);
+                return true;
+            }
+
+            if (interaction.ReplaceWith is { } newProto)
+            {
+                PredictedSpawnNextToOrDrop(newProto, target);
+                PredictedQueueDel(target);
+            }
+            else
+            {
+                ApplyInteractionEffects(interaction, target);
+                AddComp<JestographicInteractedComponent>(target);
+            }
+
+            _charges.TryUseCharge(ent.Owner);
+            _audio.PlayPredicted(ent.Comp.ReverseSound, target, user);
+            _popup.PopupEntity(
+                Loc.GetString(interaction.Message, ("target", Identity.Entity(target, EntityManager))),
+                user,
+                user,
+                PopupType.Medium);
+
+            _adminLogger.Add(LogType.Emag,
+                LogImpact.Medium,
+                $"{ToPrettyString(user):player} jested {ToPrettyString(target):target} using {ToPrettyString(ent):used}");
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private void ApplyInteractionEffects(JestographicInteractionPrototype interaction, EntityUid target)
+    {
+        if (interaction.UseDelay is { } delay && HasComp<UseDelayComponent>(target))
+            _useDelay.SetLength(target, delay);
+
+        if (interaction.SpeedMultiplier is { } speed && TryComp<MovementSpeedModifierComponent>(target, out var move))
+        {
+            _speed.ChangeBaseSpeed(
+                target,
+                move.BaseWalkSpeed * speed,
+                move.BaseSprintSpeed * speed,
+                move.Acceleration,
+                move);
+        }
+
+        if (interaction.SoundIntervalMultiplier is { } interval && TryComp<SpamEmitSoundComponent>(target, out var spam))
+        {
+            spam.MinInterval *= interval;
+            spam.MaxInterval *= interval;
+        }
     }
 }
