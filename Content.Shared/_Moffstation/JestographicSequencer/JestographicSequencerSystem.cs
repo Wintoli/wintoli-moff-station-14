@@ -143,14 +143,27 @@ public sealed class JestographicSequencerSystem : EntitySystem
             return;
         }
 
+        //A door swapped with the every-access-level fallback below is restored instead of swapped again.
+        var restoring = IsFallbackSwap(reader);
+
         //Everything that used to grant access now denies it
-        var newDenyTags = reader.AccessLists.SelectMany(x => x).ToHashSet();
+        HashSet<ProtoId<AccessLevelPrototype>> newDenyTags = restoring
+            ? new()
+            : reader.AccessLists.SelectMany(x => x).ToHashSet();
 
         //Everything that used to deny access now grants it.
         var newAccessLists = new List<HashSet<ProtoId<AccessLevelPrototype>>>();
         foreach (var denyTag in reader.DenyTags)
         {
             newAccessLists.Add([denyTag]);
+        }
+
+        //The saved original keeps grouped requirements (e.g. needing two accesses at once) intact.
+        if (restoring
+            && reader.AccessListsOriginal is { } original
+            && original.SelectMany(x => x).ToHashSet().SetEquals(reader.DenyTags))
+        {
+            newAccessLists = original.Select(x => x.ToHashSet()).ToList();
         }
 
         //Cause this was a pain to figure out, when swapping, the access list becoming empty and the deny list filling would let people in with no or blank IDs, defeating the purpose of the item 
@@ -182,6 +195,20 @@ public sealed class JestographicSequencerSystem : EntitySystem
             $"{ToPrettyString(args.User):player} reversed the accesses on {ToPrettyString(target):target} using {ToPrettyString(ent):used}");
 
         args.Handled = true;
+    }
+
+    //True if the reader's access lists are exactly one entry per access level, which is what a swap leaves on a door with no deny tags.
+    private bool IsFallbackSwap(AccessReaderComponent reader)
+    {
+        if (reader.DenyTags.Count == 0 || reader.AccessLists.Any(list => list.Count != 1))
+            return false;
+
+        var levels = _prototype.EnumeratePrototypes<AccessLevelPrototype>()
+            .Select(level => new ProtoId<AccessLevelPrototype>(level.ID))
+            .ToHashSet();
+
+        return reader.AccessLists.Count == levels.Count
+               && reader.AccessLists.Select(list => list.First()).ToHashSet().SetEquals(levels);
     }
 
     /// <summary>
