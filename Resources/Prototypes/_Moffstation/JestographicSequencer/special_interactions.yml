@@ -34,3 +34,26 @@
   speedMultiplier: 1.50
   soundIntervalMultiplier: 0.5
   message: jestographic-interaction-honkbot
+
+#Anyone who falls into a recycler is dressed in an unremovable clown outfit.
+- type: jestographicInteraction
+  id: JestographicRecycler
+  whitelist:
+    components:
+    - CollideMaterialReclaimer
+  recyclerOutfit:
+    jumpsuit: ClothingUniformJumpsuitClown
+    mask: ClothingMaskClown
+    head: ClothingHeadHatJesterAlt
+    shoes: ClothingShoesClown
+  message: jestographic-interaction-recycler
+
+#Cameras lose AI vision and map visibility until their wires are mended.
+- type: jestographicInteraction
+  id: JestographicCamera
+  whitelist:
+    components:
+    - SurveillanceCamera
+  cutCameraWires: true
+  repeatable: true
+  message: jestographic-interaction-camera

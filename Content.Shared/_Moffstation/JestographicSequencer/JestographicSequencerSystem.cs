@@ -208,7 +208,7 @@ public sealed class JestographicSequencerSystem : EntitySystem
             //Modules inside a chassis can't be swapped.
             var refuse = interaction.ReplaceWith is { } replacement
                 ? targetProto == replacement.Id || TryComp<BorgModuleComponent>(target, out var module) && module.Installed
-                : HasComp<JestographicInteractedComponent>(target);
+                : !interaction.Repeatable && HasComp<JestographicInteractedComponent>(target);
             if (refuse)
             {
                 _popup.PopupEntity(
@@ -218,6 +218,7 @@ public sealed class JestographicSequencerSystem : EntitySystem
                 return true;
             }
 
+            var targetCoordinates = Transform(target).Coordinates;
             if (interaction.ReplaceWith is { } newProto)
             {
                 PredictedSpawnNextToOrDrop(newProto, target);
@@ -225,12 +226,15 @@ public sealed class JestographicSequencerSystem : EntitySystem
             }
             else
             {
-                ApplyInteractionEffects(interaction, target);
-                AddComp<JestographicInteractedComponent>(target);
+                if (!ApplyInteractionEffects(interaction, target, user))
+                    return true;
+
+                if (!interaction.Repeatable)
+                    AddComp<JestographicInteractedComponent>(target);
             }
 
             _charges.TryUseCharge(ent.Owner);
-            _audio.PlayPredicted(ent.Comp.ReverseSound, target, user);
+            _audio.PlayPredicted(ent.Comp.ReverseSound, targetCoordinates, user);
             _popup.PopupEntity(
                 Loc.GetString(interaction.Message, ("target", Identity.Entity(target, EntityManager))),
                 user,
@@ -247,7 +251,7 @@ public sealed class JestographicSequencerSystem : EntitySystem
         return false;
     }
 
-    private void ApplyInteractionEffects(JestographicInteractionPrototype interaction, EntityUid target)
+    private bool ApplyInteractionEffects(JestographicInteractionPrototype interaction, EntityUid target, EntityUid user)
     {
         if (interaction.UseDelay is { } delay && HasComp<UseDelayComponent>(target))
             _useDelay.SetLength(target, delay);
@@ -267,5 +271,18 @@ public sealed class JestographicSequencerSystem : EntitySystem
             spam.MinInterval *= interval;
             spam.MaxInterval *= interval;
         }
+
+        if (interaction.RecyclerOutfit is { } outfit)
+            EnsureComp<JestographicRecyclerComponent>(target).Outfit = outfit;
+
+        if (interaction.CutCameraWires)
+        {
+            var wireCut = new JestographicCameraWireCutEvent(user);
+            RaiseLocalEvent(target, ref wireCut);
+            if (!wireCut.Handled)
+                return false;
+        }
+
+        return true;
     }
 }

@@ -54,4 +54,22 @@ public sealed partial class JestographicInteractionPrototype : IPrototype
     /// </summary>
     [DataField]
     public float? SoundIntervalMultiplier;
+
+    /// <summary>
+    ///The target recycler dresses mobs that fall into it in these unremovable items.
+    /// </summary>
+    [DataField]
+    public Dictionary<string, EntProtoId>? RecyclerOutfit;
+
+    /// <summary>
+    ///Cuts MAP and AIV wires when applied to a camera.
+    /// </summary>
+    [DataField]
+    public bool CutCameraWires;
+
+    /// <summary>
+    ///Allows this interaction to be used again after its effect is reversed.
+    /// </summary>
+    [DataField]
+    public bool Repeatable;
 }

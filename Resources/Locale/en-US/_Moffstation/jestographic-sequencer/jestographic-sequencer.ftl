@@ -7,3 +7,5 @@ jestographic-interaction-borg-module = The sequencer honks at {THE($target)}, an
 jestographic-interaction-pie-cannon = The sequencer honks at {THE($target)}, and it gets an upgrade!
 jestographic-interaction-clown-recorder = The sequencer honks at {THE($target)}, filling it with laughs!
 jestographic-interaction-honkbot = The sequencer honks at {THE($target)}, and it starts zooming around!
+jestographic-interaction-recycler = The sequencer honks at {THE($target)}, and it starts to hum wildly!
+jestographic-interaction-camera = The sequencer honks at {THE($target)}, frying some wires!
