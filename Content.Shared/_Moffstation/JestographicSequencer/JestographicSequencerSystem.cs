@@ -198,6 +198,7 @@ public sealed class JestographicSequencerSystem : EntitySystem
     }
 
     //True if the reader's access lists are exactly one entry per access level, which is what a swap leaves on a door with no deny tags.
+    //Checks that there is a deny tag, access list entries have exactly one level, no dupes or extras.
     private bool IsFallbackSwap(AccessReaderComponent reader)
     {
         if (reader.DenyTags.Count == 0 || reader.AccessLists.Any(list => list.Count != 1))
