@@ -52,6 +52,21 @@
     - Clown
 
 - type: listing
+  id: UplinkSyndicateBehonker
+  name: uplink-syndicate-behonker-name
+  description: uplink-syndicate-behonker-desc
+  productEntity: ReinforcementRadioSyndicateBehonker
+  cost:
+    Telecrystal: 12
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Mime
+    - Clown
+
+- type: listing
   id: UplinkMobCatReject
   name: uplink-mobcat-reject-name
   description: uplink-mobcat-reject-desc
@@ -71,6 +86,20 @@
     stock: 1
 
 # Explosives
+- type: listing
+  id: UplinkSyndicateKudzuGrenade
+  name: uplink-syndicate-kudzu-grenade-name
+  description: uplink-syndicate-kudzu-grenade-desc
+  productEntity: SyndicateKudzuGrenade
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkExplosives
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Botanist
+
 - type: listing
   id: UplinkSyndicateEmpBomb
   name: uplink-exploding-syndicate-emp-bomb-name
@@ -244,4 +273,3 @@
     Telecrystal: 2
   categories:
     - UplinkImplants
-

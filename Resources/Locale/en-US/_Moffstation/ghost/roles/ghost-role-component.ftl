@@ -26,6 +26,10 @@ ghost-role-information-jokejoke-description = A cut-throat kobold pirate serving
 ghost-role-information-pizza-delivery-scurret-name = Arnold's Pizza Delivery Scurret
 ghost-role-information-pizza-delivery-scurret-description = Delivery guaranteed within 30 minutes or less!
 
+# Syndicate Behonker
+ghost-role-information-syndicate-behonker-name = Syndicate Behonker
+ghost-role-information-syndicate-behonker-description = You are a behonker summoned by the Syndicate to do their bidding.
+
 # Syndicate Mothroach
 ghost-role-information-syndicate-mothroach-name = Syndicate Mothroach
 ghost-role-information-syndicate-mothroach-description = A mothroach in its own little blood red suit. How adorable!

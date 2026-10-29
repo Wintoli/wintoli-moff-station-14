@@ -1,0 +1,32 @@
+- type: entity
+  parent: BaseMobBehonker
+  id: MobBehonkerSyndicate
+  suffix: Syndicate
+  components:
+  - type: RandomMetadata
+    nameSegments: [NamesBehonker]
+  - type: SpamEmitSound
+    enabled: false #god it honks too much
+  - type: BatteryAmmoProvider
+    proto: RedHeavyLaser
+    fireCost: 62.5
+  - type: InnateTool
+    tools:
+    - id: WeaponBehonkerLaserSyndicate
+    - id: BikeHorn
+  - type: ToolRefinable
+    refineResult:
+    - id: MaterialBananium1
+      amount: 2
+    - id: WeaponBehonkerLaserSyndicate
+  - type: GhostRole
+    name: ghost-role-information-syndicate-behonker-name
+    description: ghost-role-information-syndicate-behonker-description
+    rules: ghost-role-information-syndicate-reinforcement-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+    raffle:
+      settings: default
+  - type: NpcFactionMember
+    factions:
+    - Syndicate

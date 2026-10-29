@@ -1,0 +1,9 @@
+- type: entity
+  parent: [ WeaponBehonkerLaser, BaseMajorContraband ]
+  id: WeaponBehonkerLaserSyndicate
+  name: large eye of a behonker
+  description: The eye of a behonker behonker, it fires a heavy laser when squeezed.
+  components:
+  - type: BatteryAmmoProvider
+    proto: RedHeavyLaser
+    fireCost: 100

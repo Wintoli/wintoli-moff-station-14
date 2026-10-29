@@ -109,3 +109,25 @@
     duration: 1.5
     spreadAmount: 3
     smokePrototype: AluminiumMetalFoam # Broken in one hit from basically anything. If you want stronger you could change to IronMetalFoam.
+
+- type: entity
+  parent: [ FragileGrenadeBase, TimerGrenadeBase, BaseSyndicateContraband ]
+  id: SyndicateKudzuGrenade
+  name: kudzu bomb
+  description: A grenade that releases an aggressive strain of kudzu.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/grenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: DeleteOnTrigger
+    keysIn:
+    - timer
+  - type: SpawnOnTrigger
+    keysIn:
+    - timer
+    proto: SyndicateKudzu
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/countdown.ogg
