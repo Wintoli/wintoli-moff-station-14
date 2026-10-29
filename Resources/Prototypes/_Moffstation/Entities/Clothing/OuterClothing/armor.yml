@@ -23,6 +23,31 @@
     walkModifier: 0.8
     sprintModifier: 0.8
 
+- type: entity
+  parent: [ ClothingOuterArmorBase, BaseChameleon, BaseSyndicateContraband ]
+  id: ClothingOuterArmorChameleon
+  name: armored chameleon vest
+  suffix: Chameleon, Armor
+  description: A chameleon vest reinforced with flexible armor plating.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/security.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/security.rsi
+  - type: ChameleonClothing
+    slot: [ outerClothing ]
+    default: ClothingOuterArmorBasic
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.7
+    showArmorOnExamine: true #Should maybe make false if chameleon? However wanted some sorta counterplay if caught.
+  - type: StaminaResistance
+    damageCoefficient: 0.75
+
 # HoS
 - type: entity
   parent: [ClothingOuterArmorBaseCarapace, ClothingOuterBase, BaseCommandContraband]

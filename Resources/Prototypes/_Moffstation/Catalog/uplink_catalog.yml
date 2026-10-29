@@ -52,6 +52,21 @@
     - Clown
 
 - type: listing
+  id: UplinkSyndicateFoamDartGrenade
+  name: uplink-syndicate-foam-dart-grenade-name
+  description: uplink-syndicate-foam-dart-grenade-desc
+  productEntity: SyndicateFoamDartGrenade
+  cost:
+    Telecrystal: 3
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Mime
+    - Clown
+
+- type: listing
   id: UplinkSyndicateBehonker
   name: uplink-syndicate-behonker-name
   description: uplink-syndicate-behonker-desc
@@ -65,6 +80,19 @@
     whitelist:
     - Mime
     - Clown
+
+- type: listing
+  id: UplinkClothingOuterArmorChameleon
+  name: uplink-clothing-outer-armor-chameleon-name
+  description: uplink-clothing-outer-armor-chameleon-desc
+  productEntity: ClothingOuterArmorChameleon
+  discountCategory: rareDiscounts
+  cost:
+    Telecrystal: 1
+  cost:
+    Telecrystal: 3
+  categories:
+  - UplinkWearables
 
 - type: listing
   id: UplinkMobCatReject

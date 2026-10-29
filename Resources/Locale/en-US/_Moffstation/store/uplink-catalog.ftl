@@ -20,6 +20,9 @@ uplink-smoke-implant-name = Smoke Implanter
 uplink-smoke-implant-desc = Implant that releases a large cloud of smoke when activated. Comes with 4 charges.
 
 # Job
+uplink-syndicate-foam-dart-grenade-name = Fake Foam Dart Grenade
+uplink-syndicate-foam-dart-grenade-desc = Looks like a foam dart grenade, but explodes like a fragmentation grenade.
+
 uplink-syndicate-behonker-name = Behonker Reinforcement
 uplink-syndicate-behonker-desc = Call in a specially trained behonker to bring death to your enemies.
 
@@ -37,6 +40,9 @@ uplink-sniper-elephant-name = Space Elephant Rifle
 uplink-sniper-elephant-desc = A loud and powerful single-shot rifle commonly used by poachers. Comes loaded with a singular round, so make it count. Uses .60 anti-materiel ammo.
 
 # Wearables
+uplink-clothing-outer-armor-chameleon-name = Chameleon Armored Vest
+uplink-clothing-outer-armor-chameleon-desc = A chameleon vest reinforced with flexible armor plating. Provides modest protection from most types of damage.
+
 uplink-clothing-infiltrator-headset-name = Syndicate Infiltrator Headset
 uplink-clothing-infiltrator-headset-desc = A headset combining both chameleon and redspace technology. It can hold up to 6 keys but ships empty. Usage is not covered by health insurance.
 

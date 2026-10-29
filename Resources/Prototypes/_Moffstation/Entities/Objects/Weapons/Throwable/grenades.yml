@@ -131,3 +131,28 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/countdown.ogg
+
+- type: entity
+  parent: [ FragileGrenadeBase, ProjectileGrenadeBase, TimerGrenadeBase]
+  id: SyndicateFoamDartGrenade
+  name: foam dart grenade
+  description: Releases a harmless spray of foam darts that causes severe welching.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Foam/foam_grenade.rsi
+    layers:
+    - state: icon
+      map: ["Base"]
+    - state: primed
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: ProjectileGrenade
+    fillPrototype: PelletClusterLethal
+    capacity: 30
+  - type: TimerTrigger
+    delay: 3.0
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
+    sound:
+      path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+    positional: true
