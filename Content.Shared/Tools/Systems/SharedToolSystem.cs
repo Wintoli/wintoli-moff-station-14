@@ -252,7 +252,10 @@ public abstract partial class SharedToolSystem : EntitySystem
         return Resolve(uid, ref tool, false) && tool.Qualities.Contains(quality);
     }
 
-    public bool TryMultiplySpeedModifier(EntityUid uid, string requiredQuality, float multiplier) // Moff start - whetstone slice increase
+    /// <summary>
+    ///     Multiplicatively modify a certain quality of an item, for example slicing speed.
+    /// </summary>
+    public bool TryMultiplySpeedModifier(EntityUid uid, string requiredQuality, float multiplier) // Moff start - increase tool speed (ie whetstone)
     {
         if (!TryComp<ToolComponent>(uid, out var tool) || !tool.Qualities.Contains(requiredQuality))
             return false;
@@ -260,7 +263,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         tool.SpeedModifier *= multiplier;
         Dirty(uid, tool);
         return true;
-    } // Moff end - whetstone slice increase
+    } // Moff end - increase tool speed (ie whetstone)
 
     /// <summary>
     ///     Whether a tool entity has all specified qualities or not.
