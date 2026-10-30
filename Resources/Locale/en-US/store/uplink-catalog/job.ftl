@@ -33,6 +33,8 @@ uplink-cane-blade-desc = A cane that has a hidden blade that can be unsheathed.
 
 uplink-combat-bakery-name = Combat Bakery Kit
 uplink-combat-bakery-desc = A kit of clandestine baked weapons. Contains a baguette sword, a pair of throwing croissants, and a syndicate microwave board for making more. Once the job is done, eat the evidence.
+uplink-moffstation-whetstone-name = Syndicate Whetstone
+uplink-moffstation-whetstone-desc = A discreet sharpening stone that permanently adds 4 slashing or piercing damage to a weapon's melee and thrown damage. It dulls after a single use; each weapon can only be sharpened once.
 
 uplink-acolyte-armor-name = Acolyte Armor
 uplink-acolyte-armor-desc = The must have of any self respecting cult leader. An evil looking piece of armor, made of bones, and surprisingly resistant to damage.

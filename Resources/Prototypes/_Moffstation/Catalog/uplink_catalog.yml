@@ -87,7 +87,7 @@
   description: uplink-clothing-outer-armor-chameleon-desc
   productEntity: ClothingOuterArmorChameleon
   discountCategory: rareDiscounts
-  cost:
+  discountDownTo:
     Telecrystal: 1
   cost:
     Telecrystal: 3

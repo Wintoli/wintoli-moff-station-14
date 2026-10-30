@@ -203,6 +203,25 @@
     - Mime
 
 - type: listing
+  id: UplinkMoffstationWhetstone
+  name: uplink-moffstation-whetstone-name
+  description: uplink-moffstation-whetstone-desc
+  icon: { sprite: Objects/Materials/ore.rsi, state: iron }
+  productEntity: Whetstone
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 1
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Chef
+    - ServiceWorker
+
+- type: listing
   id: UplinkAcolyteArmor
   name: uplink-acolyte-armor-name
   description: uplink-acolyte-armor-desc
