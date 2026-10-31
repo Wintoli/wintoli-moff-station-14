@@ -37,6 +37,8 @@
       - Wall
   - type: Anomaly
     pulseSound: null #God it honks too LOUDDDD OH MY GOD
+  - type: Vocal
+    emoteSounds: Cluwne
   - type: AutoEmote
     emotes:
     - CluwneGiggle #This is less horrible on the ears
