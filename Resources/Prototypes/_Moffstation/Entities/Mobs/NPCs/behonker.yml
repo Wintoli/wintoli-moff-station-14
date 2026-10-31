@@ -8,7 +8,7 @@
   - type: SpamEmitSound
     enabled: false #god it honks too much
   - type: BatteryAmmoProvider
-    proto: RedHeavyLaser #Big laser for big boy
+    proto: RedHeavyLaser #Big laser for big boy. If I were cool I'd give it 10 different lasers like a real beholder. Todo.
     fireCost: 62.5
   - type: InnateTool
     tools:
@@ -21,6 +21,20 @@
   - type: AutoImplant
     implants:
     - BikeHornImplant
+  - type: Devourer
+    foodPreferenceWhitelist:
+      components:
+      - HumanoidProfile
+    stomachStorageWhitelist:
+      components:
+      - MobState
+    chemical: Ichor
+    healRate: 7.5
+    whitelist:
+      components:
+      - MobState
+      - Door
+      - Wall
   - type: Anomaly
     pulseSound: null #God it honks too LOUDDDD OH MY GOD
   - type: AutoEmote
