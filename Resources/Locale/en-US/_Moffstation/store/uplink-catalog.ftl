@@ -13,11 +13,14 @@ uplink-syndicate-kudzu-grenade-name = Kudzu Bomb
 uplink-syndicate-kudzu-grenade-desc = Famously used by a vigilante hero, a grenade that releases an aggressive strain of kudzu when triggered.
 
 uplink-exploding-syndicate-emp-bomb-name = Syndicate EMP Bomb
-uplink-exploding-syndicate-emp-bomb-desc = An anchored bomb that emits a very large disabling EMP pulse if not defused in time. Disables electronics for exactly 3 minutes. Has an adjustable fuse.
+uplink-exploding-syndicate-emp-bomb-desc = An anchored bomb that emits a very large disabling EMP pulse if not defused in time. Disables electronics for exactly 5 minutes. Has an adjustable fuse.
 
 # Implants
 uplink-smoke-implant-name = Smoke Implanter
 uplink-smoke-implant-desc = Implant that releases a large cloud of smoke when activated. Comes with 4 charges.
+
+uplink-swap-implant-name = Swap Implanter
+uplink-swap-implant-desc = After thousands of tests on an individual with a permanent bluespace anomoly in their chest, an implant was made from their DNA that lets you use a fraction of their swapping power. Allows the user to swap places with anyone they can see by clapping your hands together, but only 4 times.
 
 # Job
 uplink-syndicate-foam-dart-grenade-name = Fake Foam Dart Grenade

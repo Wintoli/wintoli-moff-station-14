@@ -49,6 +49,37 @@
     event: !type:AbilitySonicBoomEvent
 
 - type: entity
+  parent: BaseAction
+  id: ActivateSwapImplant
+  name: Swap
+  description: Swap places with a target you can see.
+  components:
+  - type: LimitedCharges
+    maxCharges: 4
+  - type: Action
+    itemIconStyle: BigAction
+    priority: -20
+    useDelay: 5
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/Eldritch/voidblink.ogg
+  - type: Sprite
+    sprite: Objects/Magic/Eldritch/eldritch_actions.rsi
+    layers:
+    - state: voidblink
+  - type: TargetAction
+    accessMask:
+    - Opaque
+    repeat: false
+    range: 50 #Can only use on people you can see anywho
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - MobState
+    canTargetSelf: false
+    event: !type:VoidApplauseSpellEvent
+      effect: EffectVoidBlink
+
+- type: entity
   parent: BaseImplantAction
   id: ActivateSmokeImplant
   name: Release a cloud of smoke

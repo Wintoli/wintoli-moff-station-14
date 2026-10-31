@@ -153,10 +153,10 @@
   description: uplink-exploding-syndicate-emp-bomb-desc
   productEntity: SyndicateEmpBomb
   cost:
-    Telecrystal: 8
+    Telecrystal: 6
   discountCategory: rareDiscounts
   discountDownTo:
-    Telecrystal: 4
+    Telecrystal: 3
   categories:
   - UplinkExplosives
   conditions:
@@ -301,3 +301,19 @@
     Telecrystal: 2
   categories:
     - UplinkImplants
+
+- type: listing
+  id: UplinkSwapImplanter
+  name: uplink-swap-implant-name
+  description: uplink-swap-implant-desc
+  icon: { sprite: /Textures/Objects/Magic/Eldritch/eldritch_actions.rsi, state: voidblink }
+  productEntity: SwapImplanter
+  cost:
+    Telecrystal: 4
+  categories:
+    - UplinkImplants
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist: #Swap ops would be very funny on nukies but the moment an entire team swaps security into space round start there'd be hell raised.
+      tags:
+      - NukeOpsUplink

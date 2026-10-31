@@ -180,7 +180,7 @@ public sealed partial class DefusableSystem : SharedDefusableSystem
         {
             _explosion.TriggerExplosive(uid, user: detonator);
         }
-        // Moff ened
+        // Moff end
 
         QueueDel(uid);
         _appearance.SetData(uid, DefusableVisuals.Active, comp.Activated);

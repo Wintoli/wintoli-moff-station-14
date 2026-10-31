@@ -29,7 +29,7 @@
     - timer
     range: 45
     energyConsumption: 1000000
-    disableDuration: 180
+    disableDuration: 300
   - type: DeleteOnTrigger
     keysIn:
     - timer

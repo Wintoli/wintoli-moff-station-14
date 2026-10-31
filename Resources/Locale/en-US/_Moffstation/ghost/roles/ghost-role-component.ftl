@@ -28,7 +28,7 @@ ghost-role-information-pizza-delivery-scurret-description = Delivery guaranteed 
 
 # Syndicate Behonker
 ghost-role-information-syndicate-behonker-name = Syndicate Behonker
-ghost-role-information-syndicate-behonker-description = You are a behonker summoned by the Syndicate to do their bidding.
+ghost-role-information-syndicate-behonker-description = You are a behonker summoned by the Syndicate to do their bidding. Follow the orders of your summoner.
 
 # Syndicate Mothroach
 ghost-role-information-syndicate-mothroach-name = Syndicate Mothroach

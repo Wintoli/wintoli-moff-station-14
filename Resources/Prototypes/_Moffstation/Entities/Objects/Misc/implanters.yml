@@ -6,3 +6,12 @@
   components:
   - type: Implanter
     implant: SmokeImplant
+
+- type: entity
+  parent: BaseImplantOnlyImplanterSyndi
+  id: SwapImplanter
+  suffix:
+  name: swap implanter
+  components:
+  - type: Implanter
+    implant: SwapImplant

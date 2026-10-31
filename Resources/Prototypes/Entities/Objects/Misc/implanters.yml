@@ -49,6 +49,7 @@
     - ChameleonControllerImplant
     - VoiceMaskImplant
     - SmokeImplant # Moffstation
+    - SwapImplant # Moffstation
     deimplantFailureDamage:
       types:
         Cellular: 50
