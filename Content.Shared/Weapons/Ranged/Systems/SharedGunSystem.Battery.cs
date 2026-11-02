@@ -5,6 +5,7 @@ using Content.Shared.Projectiles;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.PowerCell;
+using Content.Shared.Random.Helpers; //Moffstation - needed for Pick method
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -71,7 +72,10 @@ public abstract partial class SharedGunSystem
 
         for (var i = 0; i < shots; i++)
         {
-            args.Ammo.Add(GetShootable(ent, args.Coordinates));
+            EntProtoId prototype = ent.Comp.RandomPrototypePool is { } poolId //Moff - start - possibility of randomness from lasers
+                ? new EntProtoId(ProtoMan.Index(poolId).Pick(Random).Id)
+                : ent.Comp.Prototype; 
+            args.Ammo.Add(GetShootable(prototype, args.Coordinates)); //Moff - end - possibility of randomness from lasers
         }
 
         TakeCharge(ent, shots);
@@ -98,9 +102,9 @@ public abstract partial class SharedGunSystem
         // UpdateShots is already called by the resulting ChargeChangedEvent
     }
 
-    private (EntityUid? Entity, IShootable) GetShootable(BatteryAmmoProviderComponent component, EntityCoordinates coordinates)
+    private (EntityUid? Entity, IShootable) GetShootable(EntProtoId prototype, EntityCoordinates coordinates) //Moff - changed to make multi/random lasers possible
     {
-        var ent = SpawnAtPosition(component.Prototype, coordinates);
+        var ent = SpawnAtPosition(prototype, coordinates); //Moff - changed to make multi/random lasers possible
         return (ent, EnsureShootable(ent));
     }
 

@@ -7,3 +7,14 @@
   - type: BatteryAmmoProvider
     proto: RedHeavyLaser
     fireCost: 100
+
+- type: entity
+  parent: WeaponBehonkerLaserSyndicate
+  id: WeaponBehonkerLaserSyndicateRandom
+  name: prismatic eye of a behonker
+  description: The eye of a behonker that randomly fires one of ten different beams when squeezed.
+  components:
+  - type: BatteryAmmoProvider
+    proto: RedHeavyLaser
+    fireCost: 100
+    randomPrototypePool: BehonkerRandomLaserPool

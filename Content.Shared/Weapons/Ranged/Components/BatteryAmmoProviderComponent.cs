@@ -1,4 +1,5 @@
 using Content.Shared.Power.Components;
+using Content.Shared.Random; //Moff - needed for random lasers
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -17,6 +18,12 @@ public sealed partial class BatteryAmmoProviderComponent : AmmoProviderComponent
     /// </summary>
     [DataField("proto", required: true)]
     public EntProtoId Prototype;
+
+    /// <summary>
+    /// Optional weighted prototype pool to choose from for each shot.
+    /// </summary>
+    [DataField]
+    public ProtoId<WeightedRandomEntityPrototype>? RandomPrototypePool; //Moff - option for random ammo shot from laser weapons
 
     /// <summary>
     /// How much charge it costs to fire once, in watts.

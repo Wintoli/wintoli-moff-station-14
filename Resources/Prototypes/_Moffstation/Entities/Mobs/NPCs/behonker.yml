@@ -1,14 +1,151 @@
+#Copy of BaseMobBehonker without the anomaly component it had. Can't remove that inherited component, tried a bunch of ways. Ugly, but also makes it so if upstream changes stuff this isn't ruined.
 - type: entity
-  parent: BaseMobBehonker
+  abstract: true
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat, BaseSlicingRefinable, BaseMobIrradiated ]
+  id: BaseMobBehonkerNoAnomaly
+  name: behonker
+  description: A floating demon aspect of the honkmother.
+  components:
+  - type: GhostRole
+    allowMovement: true
+    makeSentient: true
+    name: ghost-role-information-behonker-name
+    description: ghost-role-information-behonker-description
+    rules: ghost-role-information-antagonist-rules
+    mindRoles:
+    - MindRoleGhostRoleSoloAntagonist
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: HTN
+    rootTask:
+      task: SimpleRangedHostileCompound
+  - type: BatteryAmmoProvider
+    proto: RedLaser
+    fireCost: 62.5
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: BatterySelfRecharger
+    autoRechargeRate: 40
+  - type: Gun
+    fireRate: 0.75
+    useKey: false
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_clown.ogg
+  - type: SpamEmitSound
+    sound:
+      collection: BikeHorn
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: Speech
+    speechVerb: Cluwne
+  - type: CombatMode
+  - type: MobMover
+  - type: InputMover
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 5
+    baseWeightlessModifier: 1.5
+  - type: Sprite
+    sprite: Mobs/Demons/behonker.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 100
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: MobState
+  - type: InnateTool
+    tools:
+    - id: WeaponBehonkerLaser
+    - id: BikeHorn
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      500: Dead
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 600
+      behaviors:
+      - !type:GibBehavior
+  - type: Metabolizer
+    solutionOnBody: false
+    updateInterval: 0.25
+    metabolizerTypes: [ Dragon ]
+    stages: [ Digestion, Bloodstream ]
+  - type: ToolRefinable
+    refineResult:
+    - id: MaterialBananium1
+      amount: 2
+    - id: WeaponBehonkerLaser
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    damage:
+      types:
+        Piercing: 10
+        Slash: 10
+  - type: Input
+    context: "human"
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Laughter
+        Quantity: 300
+
+- type: weightedRandomEntity
+  id: BehonkerRandomLaserPool
+  # These are relative weights btw. Here incase I wanna change weighting and for testing. For actual lasers specifics find in behonker_lasers
+  weights:
+    BehonkerPacifyingLaser: 1
+    BehonkerShockLaser: 10000
+    BehonkerClumsyLaser: 1
+    BehonkerSlowLaser: 1
+    BehonkerPoisonLaser: 1
+    BehonkerKnockbackLaser: 1
+    BehonkerSleepLaser: 1
+    BehonkerParcelLaser: 1
+    BehonkerFireLaser: 1
+    BehonkerCluwneLaser: .5 #Funny laser but low chance
+    BehonkerDeathLaser: 1
+
+- type: entity #Version without random lasers incase random one is too crazy.
+  parent: BaseMobBehonkerNoAnomaly
   id: MobBehonkerSyndicate
-  suffix: Syndicate
+  suffix: Syndicate, One Laser
   components:
   - type: RandomMetadata
     nameSegments: [NamesBehonker]
   - type: SpamEmitSound
     enabled: false #god it honks too much
   - type: BatteryAmmoProvider
-    proto: RedHeavyLaser #Big laser for big boy. If I were cool I'd give it 10 different lasers like a real beholder. Todo.
+    proto: RedHeavyLaser #Big laser for big boy.
     fireCost: 62.5
   - type: InnateTool
     tools:
@@ -35,13 +172,11 @@
       - MobState
       - Door
       - Wall
-  - type: Anomaly
-    pulseSound: null #God it honks too LOUDDDD OH MY GOD
   - type: Vocal
     emoteSounds: Cluwne
   - type: AutoEmote
     emotes:
-    - CluwneGiggle #This is less horrible on the ears
+    - CluwneGiggle #This is less horrible on the ears than the honking
   - type: GhostRole
     name: ghost-role-information-syndicate-behonker-name
     description: ghost-role-information-syndicate-behonker-description
@@ -53,3 +188,21 @@
   - type: NpcFactionMember
     factions:
     - Syndicate
+
+- type: entity
+  parent: MobBehonkerSyndicate
+  id: MobBehonkerSyndicateRandom
+  suffix: Syndicate, Random Beams
+  components:
+  - type: BatteryAmmoProvider
+    proto: RedHeavyLaser
+    fireCost: 62.5
+    randomPrototypePool: BehonkerRandomLaserPool
+  - type: InnateTool
+    tools:
+    - id: WeaponBehonkerLaserSyndicateRandom
+  - type: ToolRefinable
+    refineResult:
+    - id: MaterialBananium1
+      amount: 2
+    - id: WeaponBehonkerLaserSyndicateRandom

@@ -1,0 +1,218 @@
+- type: entity
+  parent: LaserHitscanBase
+  id: BehonkerDeathLaser
+  name: death laser
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 50
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_beam_heavy
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: beam_heavy
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_beam_heavy
+
+- type: entity
+  parent: LaserHitscanBase
+  id: BehonkerCluwneLaser
+  name: cluwne beam
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BehonkerBeamEffect
+    effect: Cluwne
+    hitFeedbackColor: "#FF55E8"
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_beam_xenoborg
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: beam_xenoborg
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_beam_xenoborg
+
+- type: entity
+  parent: LaserHitscanBase
+  id: BehonkerPacifyingLaser
+  name: pacification beam
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BehonkerBeamEffect
+    effect: Pacify
+    hitFeedbackColor: "#3DFF68"
+    effectDuration: 5
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_laser_pointer
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: laser_pointer
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_laser_pointer
+
+- type: entity
+  parent: LaserHitscanBase
+  id: BehonkerShockLaser
+  name: electric shock beam
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BehonkerBeamEffect
+    effect: RepeatedShock
+    hitFeedbackColor: "#55C8FF"
+    effectDuration: 5
+    repeatShockInterval: 1.00
+    shockDamage: 5
+    shockStunDuration: 0.8
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_beam_xenoborg
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: beam_xenoborg
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_beam_xenoborg
+
+- type: entity
+  parent: LaserHitscanBase
+  id: BehonkerClumsyLaser
+  name: clumsy beam
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BehonkerBeamEffect
+    effect: SlipAndClumsy
+    hitFeedbackColor: "#FF9A32"
+    effectDuration: 10
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_xeno_fire
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: beam_xeno_fire
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_xeno_fire
+
+- type: entity
+  parent: LaserHitscanBase
+  id: BehonkerSlowLaser
+  name: slowing beam
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BehonkerBeamEffect
+    effect: Slow
+    hitFeedbackColor: "#6BD9FF"
+    effectDuration: 10
+    speedModifier: 0.5
+
+- type: entity
+  parent: LaserHitscanBase
+  id: BehonkerPoisonLaser
+  name: poison beam
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BehonkerBeamEffect
+    effect: Poison
+    hitFeedbackColor: "#A8E64A"
+    reagent: Amatoxin
+    reagentAmount: 2.5
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_laser_pointer
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: laser_pointer
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_laser_pointer
+
+- type: entity
+  parent: LaserHitscanBase
+  id: BehonkerKnockbackLaser
+  name: knockback beam
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Blunt: 33
+  - type: BehonkerBeamEffect
+    effect: Knockback
+    knockbackDistance: 15
+    knockbackSpeed: 10
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_beam_xenoborg_heavy
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: beam_xenoborg_heavy
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_beam_xenoborg_heavy
+
+- type: entity
+  parent: LaserHitscanBase
+  id: BehonkerSleepLaser
+  name: sleep beam
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BehonkerBeamEffect
+    effect: Sleep
+    hitFeedbackColor: "#B18CFF"
+    effectDuration: 7
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_beam_xenoborg
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: beam_xenoborg
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_beam_xenoborg
+
+- type: entity
+  parent: LaserHitscanBase
+  id: BehonkerParcelLaser
+  name: parcel beam
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BehonkerBeamEffect
+    effect: ParcelWrap
+    hitFeedbackColor: "#FFD35A"
+    parcelPrototype: WrappedParcelHumanoid
+
+- type: entity
+  parent: LaserHitscanBase
+  id: BehonkerFireLaser
+  name: fire beam
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BehonkerBeamEffect
+    effect: FireStacks
+    hitFeedbackColor: "#FF643C"
+    fireStacks: 8
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_xeno_fire
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: beam_xeno_fire
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_xeno_fire
