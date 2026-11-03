@@ -7,7 +7,7 @@
   - type: HitscanBasicDamage
     damage:
       types:
-        Heat: 50
+        Heat: 66
   - type: HitscanBasicVisuals
     muzzleFlash:
       sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
@@ -69,10 +69,10 @@
   - type: BehonkerBeamEffect
     effect: RepeatedShock
     hitFeedbackColor: "#55C8FF"
-    effectDuration: 5
+    effectDuration: 3
     repeatShockInterval: 1.00
-    shockDamage: 5
-    shockStunDuration: 0.8
+    shockDamage: 8
+    shockStunDuration: 1.0
   - type: HitscanBasicVisuals
     muzzleFlash:
       sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
@@ -93,7 +93,7 @@
   - type: BehonkerBeamEffect
     effect: SlipAndClumsy
     hitFeedbackColor: "#FF9A32"
-    effectDuration: 10
+    effectDuration: 7
   - type: HitscanBasicVisuals
     muzzleFlash:
       sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
@@ -114,7 +114,7 @@
   - type: BehonkerBeamEffect
     effect: Slow
     hitFeedbackColor: "#6BD9FF"
-    effectDuration: 10
+    effectDuration: 7
     speedModifier: 0.5
 
 - type: entity
@@ -151,7 +151,7 @@
         Blunt: 33
   - type: BehonkerBeamEffect
     effect: Knockback
-    knockbackDistance: 15
+    knockbackDistance: 20
     knockbackSpeed: 10
   - type: HitscanBasicVisuals
     muzzleFlash:
