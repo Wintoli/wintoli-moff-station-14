@@ -22,6 +22,9 @@ uplink-smoke-implant-desc = Implant that releases a large cloud of smoke when ac
 uplink-swap-implant-name = Swap Implanter
 uplink-swap-implant-desc = After thousands of tests on an individual with a permanent bluespace anomoly in their chest, an implant was made from their DNA that lets you use a fraction of their swapping power. Allows the user to swap places with anyone they can see by clapping your hands together, but only 4 times.
 
+uplink-mind-control-implanter-name = Mind Control Implanter
+uplink-mind-control-implanter-desc = A single-use implanter that augment's the recipient's brain to follow the orders of the user. Cannot be implanted into a mindshielded individual and is removed if they become mindshielded.
+
 # Job
 uplink-syndicate-foam-dart-grenade-name = Fake Foam Dart Grenade
 uplink-syndicate-foam-dart-grenade-desc = Looks like a foam dart grenade, but explodes like a fragmentation grenade.

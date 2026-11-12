@@ -317,3 +317,32 @@
     blacklist: #Swap ops would be very funny on nukies but the moment an entire team swaps security into space round start there'd be hell raised.
       tags:
       - NukeOpsUplink
+
+- type: listing
+  id: UplinkMindControlImplanter
+  name: uplink-mind-control-implanter-name
+  description: uplink-mind-control-implanter-desc
+  productEntity: MindControlImplanter
+  cost:
+    Telecrystal: 5 #I think this has the *potential* to be stronger than a syndicate reinforcement, but a LOT more work to pull off. You also want spare TC to maybe gear someone up.
+  categories:
+  - UplinkImplants
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkMindControlImplanter
+  name: uplink-mind-control-implanter-name
+  description: uplink-mind-control-implanter-desc
+  productEntity: MindControlImplanter
+  cost:
+    Telecrystal: 10 #Nukies have way too much TC for this at 5, and way more kidnapping capabilities.
+  categories:
+  - UplinkImplants
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink

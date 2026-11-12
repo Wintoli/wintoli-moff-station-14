@@ -50,6 +50,7 @@
     - VoiceMaskImplant
     - SmokeImplant # Moffstation
     - SwapImplant # Moffstation
+    - MindControlImplant # Moffstation
     deimplantFailureDamage:
       types:
         Cellular: 50

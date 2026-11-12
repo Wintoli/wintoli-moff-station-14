@@ -1,0 +1,14 @@
+- type: entity
+  parent: BaseObjective
+  id: MindControlFollowLeaderObjective
+  name: Follow your leader's orders
+  description: You were implanted with a mind control implant. Your leader is the person who implanted you. You are compelled to follow their orders above all else.
+  components:
+  - type: Objective
+    difficulty: 0
+    issuer: Unknown
+    icon:
+      sprite: Mobs/Species/Human/organs.rsi
+      state: brain
+  - type: SimpleObjective
+    title: mind-control-follow-leader-title

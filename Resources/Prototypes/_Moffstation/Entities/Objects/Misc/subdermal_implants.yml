@@ -25,6 +25,15 @@
 
 - type: entity
   parent: BaseSubdermalImplant
+  id: MindControlImplant
+  name: mind control implant
+  description: Compels its recipient to follow the orders of implanter.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: MindControlImplant
+
+- type: entity
+  parent: BaseSubdermalImplant
   id: SmokeImplant
   name: smoke implant
   description: This implant releases a smoke cloud on activation.
