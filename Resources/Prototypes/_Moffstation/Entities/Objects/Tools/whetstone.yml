@@ -2,7 +2,7 @@
   parent: BaseItem
   id: Whetstone
   name: whetstone
-  description: A sharpening stone that can increase the damage of bladed weapons, however it is only sharp enough for one sharpening.
+  description: A sharpening stone that can increase the damage of bladed weapons, however it is only sharp enough for one use.
   components:
   - type: Sprite
     sprite: Objects/Materials/ore.rsi

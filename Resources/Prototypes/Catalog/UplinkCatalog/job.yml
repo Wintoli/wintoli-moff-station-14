@@ -220,6 +220,10 @@
     whitelist:
     - Chef
     - ServiceWorker
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
 
 - type: listing
   id: UplinkAcolyteArmor
